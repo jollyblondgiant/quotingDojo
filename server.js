@@ -19,21 +19,20 @@ app.use(express.static(path.join(__dirname, '/static')));
 app.set('views', path.join(__dirname, '/views'))
 app.set('view engine', 'ejs');
 server = app.listen(1337)
+
+require('./server/config/mongoose.js')
+
 // MONGOOSE_DB
 mongoose = require('mongoose')
 mongoose.promise = global.Promise
-mongoose.connect('mongodb://localhost/basic_mongoose')
+
 // SCHEMA
-var QuoteSchema = new mongoose.Schema({
-    name: {type: String, required: true, minlength: 5},
-    text: {type: String, required: true, maxlength: 255}
-}, {timestamps: true})
-mongoose.model('Quote', QuoteSchema);
+
 var Quote = mongoose.model('Quote')
 
 
 //VIEWS ROUTING
-require('./config/routes')(app)
+require('./server/config/routes')(app)
 
 
 
